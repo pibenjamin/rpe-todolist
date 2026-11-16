@@ -1,0 +1,23 @@
+# Local development: builds the image from the sources (PHP 8.4) and uses Sqlite
+# Usage: docker compose up -d --build  ->  http://localhost:8080 (admin / admin)
+name: kanboard-local
+services:
+  app:
+    build:
+      context: .
+      args:
+        VERSION: local
+    image: kanboard-local:php8.4
+    container_name: kanboard-local
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - data:/var/www/app/data
+      - plugins:/var/www/app/plugins
+      - certs:/etc/nginx/ssl
+volumes:
+  data:
+  plugins:
+  certs:
